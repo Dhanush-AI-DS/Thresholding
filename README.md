@@ -8,88 +8,105 @@ To segment the image using global thresholding, adaptive thresholding and Otsu's
 
 ## Algorithm
 
-### Step1:
+### Step1: Load the image and convert the image to Grayscale.
+
 <br>
 
-### Step2:
+### Step2:  Smoothen the image using Gaussian Method.
 <br>
 
-### Step3:
+### Step3:  Apply thresholding cv2.THRESH_BINARY on the image.
 <br>
 
-### Step4:
+### Step4:  Apply thresholding cv2.THRESH_BINARY_INC on the image.
 <br>
 
-### Step5:
+### Step5:  Apply thresholding cv2.THRESH_TRUNC on the image.
+
 <br>
+
+### Step6  :Apply thresholding cv2.THRESH_TOZERO_INC on the image.
 
 ## Program
+```
+Developed by: DHANUSH S
+Register Number: 212221230020
 
-```python
 # Load the necessary packages
-
-
-
-
+import cv2
+import matplotlib.pyplot as plt
 
 # Read the Image and convert to grayscale
-
-
-
+BGR_image=cv2.imread('Angry.jpg')
+gray=cv2.cvtColor(BGR_image,cv2.COLOR_BGR2GRAY)
+plt.imshow(gray)
 
 # Use Global thresholding to segment the image
 
-
+ret,thresh1=cv2.threshold(gray,235,148,cv2.THRESH_BINARY )
+ret,thresh2=cv2.threshold(gray,235,148,cv2.THRESH_BINARY_INV)
+ret,thresh3=cv2.threshold(gray,235,148,cv2.THRESH_TRUNC)
+ret,thresh4=cv2.threshold(gray,235,148,cv2.THRESH_TOZERO)
+ret,thresh5=cv2.threshold(gray,235,148,cv2.THRESH_TOZERO_INV)
 
 
 # Use Adaptive thresholding to segment the image
 
-
+img= cv2.GaussianBlur(gray,(3,3),0)
+th1 = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY, 11,2) 
+th2= cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY, 11,2)
+titles = ['Original Image', 'Adaptive Mean Thresholding', "Adaptive Gaussian Thresholding"]
+images =[img, th1, th2]
+for i in range(3):
+          plt.subplot (3,1,i+1),
+          plt.imshow(images[i], 'gray')
+          plt.title(titles[i])
+          plt.xticks([]),plt.yticks([])
+          plt.show()
 
 
 # Use Otsu's method to segment the image 
-
-
-
+ret2,th2 = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 
 # Display the results
-
-
-
-
+plt.imshow(thresh1,cmap='gray')
+plt.imshow(thresh2,cmap='gray')
+plt.imshow(thresh3,cmap='gray')
+plt.imshow(thresh4,cmap='gray')
+plt.imshow(thresh5,cmap='gray')
+plt.imshow(th2,cmap='gray')
 
 ```
-## Output
+## Output:
 
-### Original Image
+### Original Image:
+<br>![output](Angry.jpg)
 <br>
 <br>
 <br>
 <br>
-<br>
-
+###  Greyscale image:
+![output](yoyo-1.png)
 ### Global Thresholding
-<br>
-<br>
-<br>
-<br>
-<br>
-
-### Adaptive Thresholding
-<br>
-<br>
-<br>
-<br>
+<br>![output](yoyo-3.png)
+    ![output](yoyo-4.png)
+<br>![output](yoyo-5.png)
+<br>![output](yoyo-6.png)
+<br>![output](yoyo-7.png)
 <br>
 
-### Optimum Global Thesholding using Otsu's Method
-<br>
-<br>
+### Adaptive Thresholding:
+![output](yoyo-2.png)
+
+
+
+### Optimum Global Thesholding using Otsu's Method:
+<br>![output](yoyo-8.png)
 <br>
 <br>
 <br>
 
 
-## Result
+## Result:
 Thus the images are segmented using global thresholding, adaptive thresholding and optimum global thresholding using python and OpenCV.
 
